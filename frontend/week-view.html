@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Scheduler - Week View</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="week-view-styles.css">
+</head>
+<body class="dark-mode">
+    <div class="week-view-container">
+        <!-- Header -->
+        <header class="week-header">
+            <div class="week-navigation">
+                <button class="btn-nav-week" id="prev-week">&larr; Previous Week</button>
+                <span id="week-range" class="week-range"></span>
+                <button class="btn-nav-week" id="next-week">Next Week &rarr;</button>
+            </div>
+        </header>
+        
+        <!-- Week Grid -->
+        <div class="week-grid-container">
+            <div class="time-labels">
+                <div class="time-label-header">Time</div>
+                <div class="time-label" data-hour="8">8:00 AM</div>
+                <div class="time-label" data-hour="9">9:00 AM</div>
+                <div class="time-label" data-hour="10">10:00 AM</div>
+                <div class="time-label" data-hour="11">11:00 AM</div>
+                <div class="time-label" data-hour="12">12:00 PM</div>
+                <div class="time-label" data-hour="13">1:00 PM</div>
+                <div class="time-label" data-hour="14">2:00 PM</div>
+                <div class="time-label" data-hour="15">3:00 PM</div>
+                <div class="time-label" data-hour="16">4:00 PM</div>
+                <div class="time-label" data-hour="17">5:00 PM</div>
+                <div class="time-label" data-hour="18">6:00 PM</div>
+            </div>
+            
+            <div class="week-grid" id="week-grid">
+                <!-- Days populated by JavaScript -->
+                <!-- Draggable timeblock grid -->
+                <div class="day-column" data-day="Monday">
+                    <div class="day-header">Monday</div>
+                    <div class="timeblocks">
+                        <div class="timeblock" data-time="08:00"></div>
+                        <div class="timeblock" data-time="09:00"></div>
+                        <div class="timeblock" data-time="10:00"></div>
+                        <!-- ... more timeblocks ... -->
+                    </div>
+                </div>
+                <!-- Repeat for other days -->
+            </div>
+        </div>
+        
+        <!-- Day Details Panel -->
+        <aside class="day-details">
+            <h3 id="selected-day-title">Select a day</h3>
+            <div class="day-events" id="day-details-events">
+                <!-- Events for selected day populated here -->
+            </div>
+        </aside>
+    </div>
+    
+    <script src="drag-drop.js"></script>
+    <script src="week-view.js"></script>
+</body>
+</html>

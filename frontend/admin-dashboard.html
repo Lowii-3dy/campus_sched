@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Scheduler - Admin Panel</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="admin-container">
+        <!-- Sidebar Navigation -->
+        <aside class="admin-sidebar">
+            <div class="sidebar-header">
+                <h2>Campus Scheduler</h2>
+                <span class="admin-badge">Admin</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <a href="#dashboard" class="nav-item active" data-section="dashboard">
+                    <span class="nav-icon">📊</span> Dashboard
+                </a>
+                <a href="#users" class="nav-item" data-section="users">
+                    <span class="nav-icon">👥</span> User Management
+                </a>
+                <a href="#approvals" class="nav-item" data-section="approvals">
+                    <span class="nav-icon">✓</span> Event Approvals
+                </a>
+                <a href="#facilities" class="nav-item" data-section="facilities">
+                    <span class="nav-icon">🏢</span> Facilities
+                </a>
+                <a href="#statistics" class="nav-item" data-section="statistics">
+                    <span class="nav-icon">📈</span> Statistics
+                </a>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <button class="btn-logout">Logout</button>
+            </div>
+        </aside>
+        
+        <!-- Main Content Area -->
+        <main class="admin-main">
+            <!-- Header -->
+            <header class="admin-header">
+                <h1 id="section-title">Dashboard</h1>
+                <div class="header-actions">
+                    <input type="text" class="search-input" placeholder="Search...">
+                    <button class="btn-settings">⚙️ Settings</button>
+                </div>
+            </header>
+            
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="content-section active">
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>Total Users</h3>
+                        <p class="stat-value" id="stat-total-users">0</p>
+                        <p class="stat-label">Active: <span id="stat-active-users">0</span></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Schedules</h3>
+                        <p class="stat-value" id="stat-total-schedules">0</p>
+                        <p class="stat-label">Class Schedules: <span id="stat-class-schedules">0</span></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Total Events</h3>
+                        <p class="stat-value" id="stat-total-events">0</p>
+                        <p class="stat-label">Pending Approval: <span id="stat-pending-approvals">0</span></p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>Role Distribution</h3>
+                        <div class="role-breakdown">
+                            <p>Admins: <span id="stat-admins">0</span></p>
+                            <p>Teachers: <span id="stat-teachers">0</span></p>
+                            <p>Students: <span id="stat-students">0</span></p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- User Management Section -->
+            <section id="users" class="content-section">
+                <div class="section-header">
+                    <h2>User Management</h2>
+                    <button class="btn-primary" id="btn-add-user">+ Add User</button>
+                </div>
+                
+                <div class="filters-bar">
+                    <select id="filter-role" class="filter-select">
+                        <option value="">All Roles</option>
+                        <option value="admin">Admin</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="student">Student</option>
+                    </select>
+                    <select id="filter-active" class="filter-select">
+                        <option value="">All Status</option>
+                        <option value="true">Active</option>
+                        <option value="false">Inactive</option>
+                    </select>
+                    <input type="text" id="filter-search" class="filter-input" placeholder="Search by email...">
+                </div>
+                
+                <div class="users-table-container">
+                    <table class="users-table">
+                        <thead>
+                            <tr>
+                                <th>Email</th>
+                                <th>Name</th>
+                                <th>Role</th>
+                                <th>Department</th>
+                                <th>Can Create Schedule</th>
+                                <th>Status</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <!-- Populated by JavaScript -->
+                        </tbody>
+                    </table>
+                </div>
+                
+                <div class="pagination" id="users-pagination"></div>
+            </section>
+            
+            <!-- Event Approvals Section -->
+            <section id="approvals" class="content-section">
+                <div class="section-header">
+                    <h2>Event Approvals</h2>
+                    <div class="approval-filter">
+                        <select id="filter-approval-status" class="filter-select">
+                            <option value="pending">Pending</option>
+                            <option value="approved">Approved</option>
+                            <option value="declined">Declined</option>
+                        </select>
+                    </div>
+                </div>
+                
+                <div class="approvals-list" id="approvals-list">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Facilities Section -->
+            <section id="facilities" class="content-section">
+                <div class="section-header">
+                    <h2>Facilities Management</h2>
+                </div>
+                
+                <div class="facilities-grid" id="facilities-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </section>
+            
+            <!-- Statistics Section -->
+            <section id="statistics" class="content-section">
+                <div class="section-header">
+                    <h2>Platform Statistics</h2>
+                </div>
+                
+                <div class="stats-detail-grid">
+                    <div class="stats-chart">
+                        <h3>Users by Role</h3>
+                        <div id="chart-role-distribution" class="chart-placeholder"></div>
+                    </div>
+                    <div class="stats-chart">
+                        <h3>Events by Status</h3>
+                        <div id="chart-event-status" class="chart-placeholder"></div>
+                    </div>
+                    <div class="stats-chart">
+                        <h3>Departments</h3>
+                        <div id="departments-list" class="chart-placeholder"></div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    
+    <!-- User Modal -->
+    <div class="modal" id="user-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>User Details</h2>
+            <form id="user-form">
+                <input type="hidden" id="user-id">
+                <label>Email: <input type="email" id="user-email" required></label>
+                <label>First Name: <input type="text" id="user-first-name" required></label>
+                <label>Last Name: <input type="text" id="user-last-name" required></label>
+                <label>Role:
+                    <select id="user-role">
+                        <option value="student">Student</option>
+                        <option value="teacher">Teacher</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </label>
+                <label>Department: <input type="text" id="user-department"></label>
+                <label class="checkbox">
+                    <input type="checkbox" id="user-can-create">
+                    Can Create Schedule
+                </label>
+                <label class="checkbox">
+                    <input type="checkbox" id="user-is-active" checked>
+                    Active
+                </label>
+                <button type="submit" class="btn-primary">Save User</button>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Approval Modal -->
+    <div class="modal" id="approval-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Review Event</h2>
+            <div id="approval-details"></div>
+            <div class="approval-actions">
+                <textarea id="approval-reason" placeholder="Reason (required for decline)..."></textarea>
+                <button class="btn-success" id="btn-approve">Approve</button>
+                <button class="btn-danger" id="btn-decline">Decline</button>
+            </div>
+        </div>
+    </div>
+    
+    <script src="admin-panel.js"></script>
+</body>
+</html>

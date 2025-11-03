@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Preferences</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body class="dark-mode">
+    <div class="preferences-container">
+        <div class="preferences-header">
+            <h1>Email Notification Preferences</h1>
+            <p>Manage how you receive email notifications from Campus Scheduler</p>
+        </div>
+        
+        <form id="email-preferences-form" class="preferences-form">
+            <!-- Email preference controls -->
+            
+            <div class="preference-section">
+                <h3>Event Approvals</h3>
+                <label class="preference-item">
+                    <input type="checkbox" name="receive_approval_emails" id="approval-emails">
+                    <span>Receive emails when events are approved or declined</span>
+                </label>
+            </div>
+            
+            <div class="preference-section">
+                <h3>Event Reminders</h3>
+                <label class="preference-item">
+                    <input type="checkbox" name="receive_reminders" id="reminders">
+                    <span>Receive reminder emails before events</span>
+                </label>
+                <label class="preference-nested">
+                    <span>Send reminders</span>
+                    <select name="reminder_hours_before" id="reminder-hours">
+                        <option value="1">1 hour before</option>
+                        <option value="6">6 hours before</option>
+                        <option value="12">12 hours before</option>
+                        <option value="24" selected>24 hours before</option>
+                    </select>
+                </label>
+            </div>
+            
+            <div class="preference-section">
+                <h3>Schedule Updates</h3>
+                <label class="preference-item">
+                    <input type="checkbox" name="receive_schedule_updates" id="schedule-updates">
+                    <span>Receive emails when shared schedules are updated</span>
+                </label>
+            </div>
+            
+            <div class="preferences-actions">
+                <button type="submit" class="btn-primary">Save Preferences</button>
+                <button type="button" class="btn-secondary" onclick="sendTestEmail()">Send Test Email</button>
+            </div>
+        </form>
+        
+        <div id="preference-status" class="status-message"></div>
+    </div>
+    
+    <script src="email-preferences.js"></script>
+</body>
+</html>

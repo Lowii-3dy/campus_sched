@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Campus Scheduler - Dashboard</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="calendar.css">
+</head>
+<body class="dark-mode">
+    <div class="dashboard-wrapper">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h1>Campus Scheduler</h1>
+                <span class="user-role-badge" id="user-role-display"></span>
+            </div>
+            <div class="header-right">
+                <div class="user-info">
+                    <span id="user-name"></span>
+                    <button class="btn-user-menu">⋮</button>
+                    <div class="user-dropdown">
+                        <a href="#" onclick="openSettings()">Settings</a>
+                        <a href="#" onclick="logout()">Logout</a>
+                    </div>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Sidebar Navigation -->
+        <div class="dashboard-container">
+            <aside class="dashboard-sidebar">
+                <nav class="sidebar-menu">
+                    <div class="menu-section">
+                        <h3 class="menu-title">Schedules</h3>
+                        <a href="#" class="menu-item active" data-view="calendar">
+                            <span class="icon">📅</span> Calendar View
+                        </a>
+                        <a href="#" class="menu-item" data-view="schedules">
+                            <span class="icon">📋</span> My Schedules
+                        </a>
+                        <a href="#" class="menu-item" data-view="browse">
+                            <span class="icon">🔍</span> Browse Schedules
+                        </a>
+                    </div>
+                    
+                    <div class="menu-section" id="creation-section" style="display:none;">
+                        <h3 class="menu-title">Create</h3>
+                        <a href="#" class="menu-item" data-view="create-schedule">
+                            <span class="icon">➕</span> New Schedule
+                        </a>
+                        <a href="#" class="menu-item" data-view="create-event">
+                            <span class="icon">➕</span> New Event
+                        </a>
+                    </div>
+                    
+                    <div class="menu-section">
+                        <h3 class="menu-title">Other</h3>
+                        <a href="#" class="menu-item" data-view="notifications">
+                            <span class="icon">🔔</span> Notifications
+                            <span class="notification-badge" id="notif-badge" style="display:none;">0</span>
+                        </a>
+                    </div>
+                </nav>
+            </aside>
+            
+            <!-- Main Content -->
+            <main class="dashboard-main">
+                <!-- Calendar View -->
+                <section id="calendar-view" class="view-section active">
+                    <div class="view-header">
+                        <h2>Calendar</h2>
+                        <div class="calendar-controls">
+                            <button class="btn-nav" id="prev-month">&larr;</button>
+                            <span id="current-month"></span>
+                            <button class="btn-nav" id="next-month">&rarr;</button>
+                        </div>
+                    </div>
+                    <div class="calendar-container">
+                        <div class="calendar-weekdays">
+                            <div class="weekday">Sun</div>
+                            <div class="weekday">Mon</div>
+                            <div class="weekday">Tue</div>
+                            <div class="weekday">Wed</div>
+                            <div class="weekday">Thu</div>
+                            <div class="weekday">Fri</div>
+                            <div class="weekday">Sat</div>
+                        </div>
+                        <div class="calendar-grid" id="calendar-grid">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                    
+                    <div class="day-events">
+                        <h3 id="selected-day"></h3>
+                        <div class="events-list" id="day-events-list">
+                            <!-- Populated by JavaScript -->
+                        </div>
+                    </div>
+                </section>
+                
+                <!-- Schedules List -->
+                <section id="schedules-view" class="view-section">
+                    <div class="view-header">
+                        <h2>My Schedules</h2>
+                        <button class="btn-primary" id="btn-create-schedule">+ Create Schedule</button>
+                    </div>
+                    <div class="schedules-grid" id="schedules-grid">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Browse Public Schedules -->
+                <section id="browse-view" class="view-section">
+                    <div class="view-header">
+                        <h2>Browse Schedules</h2>
+                        <input type="search" id="browse-search" placeholder="Search schedules..." class="search-input">
+                    </div>
+                    <div class="schedules-grid" id="browse-grid">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </section>
+                
+                <!-- Create Schedule -->
+                <section id="create-schedule-view" class="view-section">
+                    <div class="view-header">
+                        <h2>Create New Schedule</h2>
+                    </div>
+                    <form class="form-container" id="create-schedule-form">
+                        <label>
+                            <span>Schedule Title *</span>
+                            <input type="text" name="title" required>
+                        </label>
+                        <label>
+                            <span>Description</span>
+                            <textarea name="description" rows="4"></textarea>
+                        </label>
+                        <label>
+                            <span>Schedule Type *</span>
+                            <select name="type" required>
+                                <option value="false">Event Schedule</option>
+                                <option value="true">Class Schedule</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Color</span>
+                            <div class="color-picker">
+                                <input type="radio" name="color" value="#3b82f6" checked> Blue
+                                <input type="radio" name="color" value="#10b981"> Green
+                                <input type="radio" name="color" value="#f59e0b"> Amber
+                                <input type="radio" name="color" value="#ef4444"> Red
+                                <input type="radio" name="color" value="#a855f7"> Purple
+                            </div>
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="is_public">
+                            Make Public
+                        </label>
+                        <button type="submit" class="btn-primary">Create Schedule</button>
+                    </form>
+                </section>
+                
+                <!-- Create Event -->
+                <section id="create-event-view" class="view-section">
+                    <div class="view-header">
+                        <h2>Create New Event</h2>
+                    </div>
+                    <form class="form-container" id="create-event-form">
+                        <label>
+                            <span>Schedule *</span>
+                            <select name="schedule_id" required>
+                                <option value="">Select a schedule</option>
+                            </select>
+                        </label>
+                        <label>
+                            <span>Event Title *</span>
+                            <input type="text" name="title" required>
+                        </label>
+                        <label>
+                            <span>Description</span>
+                            <textarea name="description" rows="3"></textarea>
+                        </label>
+                        <div class="form-row">
+                            <label>
+                                <span>Start Date & Time *</span>
+                                <input type="datetime-local" name="start_time" required>
+                            </label>
+                            <label>
+                                <span>End Date & Time *</span>
+                                <input type="datetime-local" name="end_time" required>
+                            </label>
+                        </div>
+                        <div class="form-row">
+                            <label>
+                                <span>Building</span>
+                                <input type="text" name="building" placeholder="e.g., Science Hall">
+                            </label>
+                            <label>
+                                <span>Room Number</span>
+                                <input type="text" name="room_number" placeholder="e.g., 101">
+                            </label>
+                        </div>
+                        <label>
+                            <span>Location</span>
+                            <input type="text" name="location" placeholder="Full address">
+                        </label>
+                        <label class="checkbox">
+                            <input type="checkbox" name="is_recurring">
+                            Recurring Event
+                        </label>
+                        <div id="recurrence-options" style="display:none;">
+                            <label>
+                                <span>Recurrence Pattern</span>
+                                <select name="recurrence_pattern">
+                                    <option value="daily">Daily</option>
+                                    <option value="weekly" selected>Weekly</option>
+                                    <option value="monthly">Monthly</option>
+                                </select>
+                            </label>
+                            <label>
+                                <span>End Date</span>
+                                <input type="date" name="recurrence_end_date">
+                            </label>
+                        </div>
+                        <label class="checkbox" id="approval-option" style="display:none;">
+                            <input type="checkbox" name="requires_approval">
+                            Requires Approval
+                        </label>
+                        <button type="submit" class="btn-primary">Create Event</button>
+                    </form>
+                </section>
+                
+                <!-- Notifications -->
+                <section id="notifications-view" class="view-section">
+                    <div class="view-header">
+                        <h2>Notifications</h2>
+                        <button class="btn-secondary" id="btn-mark-read">Mark All as Read</button>
+                    </div>
+                    <div class="notifications-list" id="notifications-list">
+                        <!-- Populated by JavaScript -->
+                    </div>
+                </section>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Event Details Modal -->
+    <div class="modal" id="event-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div id="event-details"></div>
+            <div id="event-actions"></div>
+        </div>
+    </div>
+    
+    <!-- Schedule Details Modal -->
+    <div class="modal" id="schedule-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2 id="schedule-title"></h2>
+            <p id="schedule-description"></p>
+            <div class="schedule-events" id="schedule-events-list"></div>
+            <button class="btn-danger" id="btn-delete-schedule">Delete Schedule</button>
+        </div>
+    </div>
+    
+    <script src="dashboard.js"></script>
+</body>
+</html>
